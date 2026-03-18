@@ -1,0 +1,17 @@
+1.	What is an IP? (100 words)
+En IP addresse er en specifik adresse på hver en enhed der har adgang til internettet så andre enheder kan få fat i denne. TCP-protokollen deler data op i mindre stykker, hvor den tjekker for fejl samt sørger den for at data kommer frem i rigtig rækkefølge. IP pakker data ind og finder vej til adressen den skal sendes til. Sockets bruges i networking til at specificere det præcise sted data skal sendes hen (IP + port). IP kunne se ud som 192.168.1.10 med port 80 som port. Hvis vi kigger på adressen 127.0.0.1 er det adressen på ”localhost” som egentlig bare er din egen computers IP-adresse.
+
+2.	What does a client-server architecture mean? (150 words)
+En klient-server-arkitektur en model hvor et system er opdelt i to hovedroller: klienter og server. Klienten er den enhed der anmoder om en service hos serveren. Kommunikationen mellem dem foregår typisk over et netværk, hvor klienten sender en forespørgsel, og serveren responderer tilbage med de ønskede data. 
+Et eksempel på en klient server arkitektur kunne være når du bruger en webbrowser (som chrome eller edge) til at sende en forespørgsel til en hjemmeside (server) som responderer tilbage med hjemmesidens indhold.
+Man afgør hvem der er klient og server ud fra hvilke rollerne de involverede har i kommunikationen til hinanden. Den der initialiserer forespørgslen, er klienten, mens den der modtager forespørgslen og leverer data, er serveren. Det er altså ikke en specifik hardware der gør en til en klient eller server, men selve rollen man tager sig i kommunikationen. Dvs at ens egen computer både kan være klient og server. Typisk er ens computer klient, men et eksempel på hvor den agerer som server er hvis du f.eks. pinger din computers IP.
+
+3.	What is the difference between client-server architecture and the broker architecture? (100 words)
+Forskellen mellem klient server arkitektur og broker arkitektur er hvordan kommunikationen foregår. I klient-server modellen kommunikerer klienten direkte til serveren, som leverer data. I en broker arkitektur går kommunikationen igennem en mellem mand, som håndterer beskeder mellem forskellige systemer.
+Fordelen med broker arkitekturen er at der er større fleksibilitet så det er nemmere at samarbejde med mange forskellige servere som klient, samt behøver klienten ikke kende serveren direkte men kun brokeren.
+Ulemper kan være at der kan være større latenstid da klientens forespørgsel skal igennem brokeren samt skal dataen som serveren har sendt også igennem brokeren. 
+
+4.	What does peer-to-peer mean (150 words)
+Peer-to-peer betyder, at computere kommunikerer direkte med hinanden, uden en cetral server. Hver computer kan både sende og modtage data, så begge computere der kommunikerer, kan fungere som klient og server på samme tid. 
+Et sted man kan møde denne metode online feks. Med fildeling via en bittorrent, hvor hver computer kommunikerer direkte med hinanden hvor de både modtager og sender data frem og tilbage og agere klient og server samtidigt. Fordele er mindre belastning på en central server og ofte er det også hurtigere i forhold til fildeling.
+For eksempel programmet med Clayton og Tarzan. De sendte beskeder direkte til hinanden, og spurgte kun serveren om ip-adressen på modtageren af beskeden. Så når de først har hinanden lokation, behøver de ikke gå igennem serveren. Det virker egentlig meget smart, hvis man har travlt den dag.

@@ -13,7 +13,7 @@ zmq::context_t ctx;
 std::map<std::string,zmq::socket_t> name_to_socket;
 std::mutex name_to_socket_lock;
 
-void send_func(std::string whereis_endpoint)
+void send_func(std::string whereis_endpoint, std::string sender_name)
 {   
 
     zmq::socket_t sock(ctx,zmq::socket_type::req);
@@ -64,6 +64,8 @@ void send_func(std::string whereis_endpoint)
         {
             maybe_socket = name_to_socket.find(recipient);
             std::cout << "sending message: '" << text << "' to: '" << recipient << "'" << std::endl; 
+            //Sending senders name also, instead of only text
+            maybe_socket->second.send(zmq::buffer(sender_name), zmq::send_flags::sndmore);
             maybe_socket->second.send(zmq::buffer(text));
         }
     }
@@ -74,13 +76,24 @@ void recv_func(std::string endpoint)
 {
     zmq::socket_t sock(ctx,zmq::socket_type::pull);
     sock.bind(endpoint);
+
     zmq::message_t msg;
     
 
     while(true)
     {
-        auto _ = sock.recv(msg);
-        std::cout << "recieved message: '" << msg.to_string() << "'" << std::endl;
+    //Recipient recieves senders name and sender text
+    zmq::message_t sender_msg;
+    zmq::message_t text_msg;
+
+    auto res1 = sock.recv(sender_msg);
+    auto res2 = sock.recv(text_msg);
+
+    std::string sender = sender_msg.to_string();
+    std::string text = text_msg.to_string();
+
+    //Print out senders name so he cant trap him:()
+    std::cout << "received message from " << sender << ": '" << text << "'" << std::endl;
     }
 }
 
@@ -112,8 +125,8 @@ int main(int argc, char **argv)
     std::cout << "client successfully registered" << std::endl;
     std::cout << "to send a message type a message of the form: 'recipient,message' and then press enter" << std::endl;
 
-    std::thread send_thread(send_func,server_whereis_client_endpoint);
-    std::thread recv_thread(recv_func,recv_endpoint);
+    std::thread send_thread(send_func,server_whereis_client_endpoint, name);
+    std::thread recv_thread(recv_func, recv_endpoint);
 
     send_thread.join();
     recv_thread.join();
